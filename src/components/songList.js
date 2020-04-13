@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { selectSong } from '../actions';
 
 class songList extends PureComponent {
   renderList() {
@@ -9,7 +11,11 @@ class songList extends PureComponent {
     return this.props.songs.map((song) => (
       <div className="item" key={song.title}>
         <div className="right floated content">
-          <button type="button" className="ui button primary">
+          <button
+            type="button"
+            onClick={() => this.props.selectSong(song)}
+            className="ui button primary"
+          >
             select
           </button>
         </div>
@@ -25,5 +31,9 @@ class songList extends PureComponent {
   }
 }
 // ()=>{return()} ==> ()=>({})
-const mapStateToProps = (state) => ({ songs: state.songs });
-export default connect(mapStateToProps)(songList);
+// selectSong ==> selectSong: selectSong
+const mapStateToProps = (state) => {
+  console.log(state);
+  return { songs: state.songs };
+};
+export default connect(mapStateToProps, { selectSong })(songList);
